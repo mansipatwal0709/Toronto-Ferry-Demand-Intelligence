@@ -1,0 +1,426 @@
+# TORONTO FERRY DEMAND INTELLIGENCE
+
+## An Exploratory Data Analysis of Ticket Sales, Redemptions and Seasonal Demand Patterns (2015–2025)
+
+**Academic Research Paper**
+
+**Submitted as:** Data Analytics Course Completion Project
+
+**Author:** [Your Full Name]  
+**Institution:** [Course Provider / Institution]  
+**Technology:** Microsoft Power BI, DAX, Power Query and Microsoft Excel  
+**Research Period:** 2015–2025 (subject to final dataset coverage verification)
+
+---
+
+# Abstract
+
+Public ferry transportation plays an important role in connecting urban communities, supporting tourism and providing access to recreational destinations. Effective ferry operations require an understanding of passenger demand patterns, seasonal variations and peak travel periods.
+
+This research presents an exploratory data analysis of Toronto Island Ferry ticket sales and redemption records using historical timestamp-based data. The primary objective is to identify temporal demand patterns, compare ticket sales and redemptions, examine seasonal variations and develop data-driven insights that can support operational planning.
+
+The project uses Microsoft Power BI, Power Query and Data Analysis Expressions (DAX) to transform and analyse ticket records. The analytical framework includes hourly ticket sales, hourly redemptions, net ticket difference, peak demand identification and an off-season utilization index.
+
+An interactive dashboard was developed featuring key performance indicators, time-series analysis, an hourly demand heatmap, peak versus off-peak comparison, seasonal demand analysis and interactive filtering.
+
+Preliminary dashboard observations identify 12:00–13:00 as the highest-demand hourly window in the displayed analysis. The seasonal comparison also indicates stronger demand during summer than during the colder seasons. These observations require validation against the complete underlying dataset before being treated as statistically conclusive.
+
+The research demonstrates how business intelligence tools can transform transportation ticketing records into operational insights and support evidence-based decision-making.
+
+**Keywords:** Toronto Ferry, Exploratory Data Analysis, Power BI, Ticket Sales, Ticket Redemptions, Seasonal Demand, Transportation Analytics, Business Intelligence.
+
+---
+
+# 1. Introduction
+
+Urban transportation systems are essential to the economic, social and recreational activities of cities. Ferry transportation provides an important connection between mainland areas and island communities, particularly where water-based travel is necessary.
+
+Toronto Island Ferry services connect the mainland at Jack Layton Ferry Terminal with Centre Island, Hanlan's Point and Ward's Island.
+
+Demand for ferry services can vary considerably according to the time of day, day of the week, season, holidays and weather conditions. Understanding these variations is important for effective scheduling, resource allocation and passenger experience management.
+
+The City of Toronto operates ferry services throughout the year, with seasonal changes in routes and schedules. Summer services generally operate across multiple island routes, while winter services operate with a reduced service pattern.
+
+These operational variations make Toronto Island Ferry an appropriate case study for applying exploratory data analysis and business intelligence techniques.
+
+This project focuses on analysing historical ticket sales and redemption records to identify demand patterns and present the results through an interactive Power BI dashboard.
+
+# 2. Research Problem
+
+Transportation operators require reliable information about when passenger demand is highest and how it changes throughout the year.
+
+Without systematic analysis, identifying recurring demand patterns and seasonal differences can be challenging.
+
+The main research problem addressed in this project is:
+
+**How can historical ferry ticket sales and redemption data be analysed to identify demand patterns and support more informed operational planning?**
+
+The research investigates hourly demand, weekday and weekend variations, seasonal trends and differences between ticket sales and redemptions.
+
+# 3. Research Objectives
+
+The primary objectives are:
+
+1. Analyse historical ferry ticket sales and redemption records.
+2. Identify hourly and daily demand patterns.
+3. Compare ticket sales and redemptions.
+4. Identify recurring peak-demand windows.
+5. Compare demand across winter, spring, summer and fall.
+6. Develop an off-season utilization index.
+7. Build an interactive Power BI dashboard for operational analysis.
+8. Provide recommendations that can support ferry scheduling and resource planning.
+
+# 4. Research Questions
+
+The study addresses the following research questions:
+
+**RQ1:** Which hours demonstrate the highest average ticket sales?
+
+**RQ2:** How do ticket sales and redemptions vary throughout the day?
+
+**RQ3:** How does demand differ between weekdays and weekends?
+
+**RQ4:** Which season demonstrates the highest average hourly ticket demand?
+
+**RQ5:** What proportion of summer demand is maintained during the off-season?
+
+**RQ6:** How can the identified patterns support ferry service planning?
+
+# 5. Dataset Description
+
+The study uses Toronto Island Ferry ticket count data associated with the City of Toronto Open Data initiative.
+
+The dataset contains timestamp-based ticket sales and redemption counts. The published dataset description identifies a 15-minute reporting interval and hourly data refresh frequency.
+
+The data covers ticket products across online and point-of-sale kiosk channels.
+
+The principal analytical fields used in the project are:
+
+| Field | Description |
+|---|---|
+| Timestamp | Date and time of the observation |
+| Sales Count | Number of tickets sold |
+| Redemption Count | Number of tickets redeemed |
+| Date | Extracted calendar date |
+| Hour | Hour of observation |
+| Day Name | Day of the week |
+| Day Type | Weekday or weekend |
+| Month | Calendar month |
+| Season | Winter, Spring, Summer or Fall |
+| Hour Start | Beginning of the hourly aggregation interval |
+
+The intended analytical period is 2015–2025. The final dataset coverage, record count and exact start and end dates must be confirmed against the source file before submission.
+
+# 6. Methodology
+
+The project follows an exploratory data analysis methodology consisting of data ingestion, data cleaning, feature engineering, KPI development, visualization and interpretation.
+
+## 6.1 Data Ingestion
+
+The dataset was imported into Microsoft Power BI using Power Query.
+
+The timestamp field was converted into an appropriate date-time data type. The records were organized chronologically to support time-based analysis.
+
+## 6.2 Data Cleaning
+
+The data preparation process included:
+
+- Inspection of missing timestamps.
+- Verification of data types.
+- Examination of duplicate records.
+- Inspection of negative and unusually high ticket counts.
+- Chronological sorting.
+- Validation of sales and redemption fields.
+
+Unusual observations should be investigated rather than automatically deleted, as unusually high demand may represent genuine peak travel activity.
+
+The final report should document the actual number of missing records, duplicates and any exclusions after validation.
+
+## 6.3 Feature Engineering
+
+Additional analytical features were created using Power Query and DAX.
+
+These included:
+
+- Hour of day.
+- Calendar date.
+- Day of week.
+- Day number for chronological sorting.
+- Month number and month name.
+- Weekend and weekday classification.
+- Seasonal classification.
+- Hourly aggregation timestamp.
+
+The seasonal classification used was:
+
+| Season | Months |
+|---|---|
+| Winter | December–February |
+| Spring | March–May |
+| Summer | June–August |
+| Fall | September–November |
+
+## 6.4 Hourly Aggregation
+
+The original dataset contains observations at 15-minute intervals.
+
+To calculate hourly demand, records were grouped into hourly intervals using the date and hour of the timestamp.
+
+Four 15-minute intervals therefore contribute to a complete hour when all four records are present.
+
+Average hourly ticket demand was calculated across observed date-hour combinations.
+
+This approach avoids treating individual 15-minute observations as complete hourly totals.
+
+# 7. Key Performance Indicators
+
+Five primary KPIs were developed.
+
+## 7.1 Tickets Sold per Hour
+
+Measures the average number of tickets sold during an observed hourly interval.
+
+Formula:
+
+Average Hourly Sales = Total Tickets Sold / Number of Observed Date-Hour Combinations
+
+This KPI helps identify recurring periods of higher ticket demand.
+
+## 7.2 Tickets Redeemed per Hour
+
+Measures the average number of tickets redeemed during an observed hourly interval.
+
+Formula:
+
+Average Hourly Redemptions = Total Tickets Redeemed / Number of Observed Date-Hour Combinations
+
+This indicator provides information about ticket redemption activity.
+
+## 7.3 Net Ticket Difference
+
+Measures the difference between total tickets sold and total tickets redeemed.
+
+Formula:
+
+Net Ticket Difference = Total Tickets Sold − Total Tickets Redeemed
+
+This metric identifies the difference between ticket sales and redemption counts.
+
+It should not be interpreted as a direct measure of passengers physically entering or leaving the terminal.
+
+## 7.4 Peak Demand Window
+
+Identifies the hourly interval with the highest average ticket sales.
+
+The dashboard uses hourly demand rankings to identify periods of elevated ticket activity.
+
+The current dashboard identifies 12:00–13:00 as the highest-demand hourly window in the displayed analysis.
+
+## 7.5 Off-Season Utilization Index
+
+The proposed index compares average hourly sales outside summer with average hourly sales during summer.
+
+Formula:
+
+Off-Season Utilization Index = (Average Off-Season Hourly Sales / Average Summer Hourly Sales) × 100
+
+An index of 40 indicates that average off-season hourly sales are 40% of the summer reference level.
+
+This is a relative demand index, not a measure of vessel capacity utilization.
+
+# 8. Exploratory Data Analysis
+
+The Power BI dashboard includes several visualizations to examine the temporal and seasonal characteristics of ferry ticket demand.
+
+## 8.1 Hourly Ticket Demand Analysis
+
+A line chart was developed to compare ticket sales and redemptions over time.
+
+This visualization helps identify long-term demand patterns, fluctuations and periods of increased activity.
+
+The chart allows users to examine historical demand across the selected reporting period.
+
+## 8.2 Hourly Passenger Demand Heatmap
+
+A matrix-based heatmap was developed to compare average hourly ticket sales across the days of the week.
+
+The visualization uses conditional formatting to distinguish lower and higher demand periods.
+
+This helps identify recurring combinations of days and hours that may require additional operational attention.
+
+## 8.3 Peak and Off-Peak Analysis
+
+The dashboard includes an hourly demand comparison and a classification of demand periods.
+
+Based on the preliminary hourly ranking, the 10:00–15:00 interval was classified as a provisional higher-demand period.
+
+The highest individual hourly window displayed in the dashboard was 12:00–13:00.
+
+These classifications should be evaluated separately by season and day type before being adopted as permanent scheduling rules.
+
+## 8.4 Seasonal Demand Analysis
+
+A clustered column chart was developed to compare average hourly sales and redemptions across four seasons.
+
+The preliminary dashboard visualization indicates stronger demand during summer compared with winter, spring and fall.
+
+This pattern is consistent with the seasonal operating context of Toronto Island Ferry services.
+
+Exact seasonal averages and percentage differences should be calculated from the validated dataset before final publication.
+
+# 9. Results and Discussion
+
+The current Power BI dashboard provides several preliminary analytical observations.
+
+### 9.1 Hourly Demand
+
+The hourly demand ranking identifies 12:00–13:00 as the highest-demand interval in the displayed analysis.
+
+The surrounding hours, particularly 10:00–15:00, also demonstrate elevated average sales.
+
+### 9.2 Ticket Sales and Redemptions
+
+The dashboard displays average tickets sold per hour of approximately 169.17 and average tickets redeemed per hour of approximately 166.73 in the current report view.
+
+These are dashboard values under the selected reporting filters, not necessarily full-period averages.
+
+### 9.3 Net Ticket Difference
+
+The current dashboard displays a net ticket difference of approximately 187,000.
+
+This figure should be verified against the full dataset and the exact active date filters before inclusion as a final study result.
+
+### 9.4 Seasonal Demand
+
+The seasonal comparison indicates that summer has the strongest average hourly ticket activity in the displayed visualization.
+
+This suggests that seasonal demand should be considered when evaluating operational planning requirements.
+
+### 9.5 Off-Season Utilization
+
+The off-season utilization measure has been developed as part of the KPI framework.
+
+Its current dashboard output requires validation before it can be interpreted as a meaningful result.
+
+# 10. Operational Recommendations
+
+Based on the analytical framework and preliminary dashboard observations, the following recommendations are proposed.
+
+## 10.1 Demand-Based Scheduling
+
+Ferry scheduling should consider recurring high-demand periods rather than relying exclusively on fixed operating timetables.
+
+Historical hourly demand can help identify periods that warrant further operational review.
+
+## 10.2 Seasonal Resource Planning
+
+Seasonal demand differences should be considered when planning staff allocation, vessel availability and service frequency.
+
+Higher summer demand and comparatively lower winter demand may require different operating arrangements.
+
+## 10.3 Weekend Demand Monitoring
+
+Weekends and holidays should be analysed separately because passenger demand may differ from ordinary weekdays.
+
+Additional service planning should be supported by recurring demand evidence.
+
+## 10.4 Passenger Congestion Management
+
+Identifying recurring high-demand periods can support terminal staffing, queue management and passenger communication.
+
+## 10.5 Continuous Performance Monitoring
+
+A regularly refreshed dashboard can help operational teams monitor changes in ticket sales and redemptions.
+
+Future implementations may incorporate weather, holiday calendars, ferry schedules and vessel capacity information.
+
+# 11. Limitations of the Study
+
+The study has several limitations.
+
+1. Ticket sales do not necessarily represent the exact time at which passengers travel.
+2. Ticket redemption counts do not independently identify the direction of passenger movement.
+3. The available dataset does not provide complete vessel capacity or occupancy information.
+4. Weather conditions and special events are not included in the current analytical model.
+5. Missing records and unusual observations require further quantitative validation.
+6. Historical averages may conceal differences between weekdays, weekends and individual seasons.
+7. The current Power BI implementation is a historical analytical dashboard rather than a continuously connected real-time operational system.
+8. The off-season utilization index requires final calculation validation.
+
+These limitations should be considered when interpreting the results and developing operational recommendations.
+
+# 12. Future Scope
+
+Future improvements may include:
+
+- Developing a Streamlit application for broader interactive access.
+- Integrating weather and public holiday information.
+- Incorporating ferry departure schedules.
+- Adding vessel capacity and actual occupancy information.
+- Developing predictive demand forecasting models.
+- Comparing seasonal demand across multiple years.
+- Introducing automated data refresh and monitoring.
+- Developing role-specific views for operations teams, policy planners and management stakeholders.
+
+Predictive modelling could provide an additional layer of insight by estimating expected ticket demand for future operating periods.
+
+# 13. Conclusion
+
+This research demonstrates the application of exploratory data analysis and business intelligence techniques to Toronto Island Ferry ticket sales and redemption data.
+
+Using Microsoft Power BI, Power Query and DAX, an interactive analytical dashboard was developed to examine hourly ticket demand, ticket redemptions, seasonal differences and peak-demand periods.
+
+The preliminary analysis identifies 12:00–13:00 as the highest-demand hourly interval in the displayed results and indicates stronger summer demand in the seasonal comparison.
+
+The developed dashboard provides an accessible way to examine historical demand patterns and can support discussions around scheduling, staffing, seasonal planning and terminal management.
+
+Although the current analysis does not independently establish vessel occupancy or physical passenger movement, it provides a useful foundation for further transportation analytics.
+
+Overall, the project illustrates how structured data preparation, KPI development and interactive visualization can contribute to evidence-based operational planning.
+
+# 14. References
+
+1. City of Toronto Open Data. *Toronto Island Ferry Ticket Counts*. Dataset catalogue.  
+   https://open.toronto.ca/dataset/toronto-island-ferry-ticket-counts/
+
+2. City of Toronto. *Ferry Ticket & Passenger Information*.  
+   https://www.toronto.ca/explore-enjoy/toronto-island-ferries/ferry-ticket-passenger-information/
+
+3. City of Toronto. *Ferry Routes & Schedules*.  
+   https://www.toronto.ca/explore-enjoy/toronto-island-ferries/ferry-routes-schedules/
+
+4. Microsoft. *Power BI Documentation*.  
+   https://learn.microsoft.com/en-us/power-bi/
+
+5. Microsoft. *Power Query Documentation*.  
+   https://learn.microsoft.com/en-us/power-query/
+
+---
+
+# Appendix A: Project Technology Stack
+
+| Technology | Application |
+|---|---|
+| Microsoft Excel / CSV | Dataset storage and initial review |
+| Power Query | Data ingestion and transformation |
+| Power BI | Dashboard development |
+| DAX | KPI calculations and analytical measures |
+| GitHub | Project versioning and portfolio presentation |
+
+# Appendix B: Dashboard Components
+
+The developed Power BI report includes:
+
+1. Tickets Sold per Hour KPI.
+2. Tickets Redeemed per Hour KPI.
+3. Net Ticket Difference KPI.
+4. Peak Demand Window KPI.
+5. Off-Season Utilization Index KPI.
+6. Sales vs Redemptions time-series chart.
+7. Hourly passenger demand heatmap.
+8. Hourly demand distribution chart.
+9. Peak vs Off-Peak analysis.
+10. Seasonal ferry demand analysis.
+11. Interactive date and time filtering.
+
+**End of Research Paper**
